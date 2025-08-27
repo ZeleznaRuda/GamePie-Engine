@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gamepie"
+version = "0.1.0"
+description = "Library to create 2d games, powered by pygame :: Gamepie youtube: 'https://www.youtube.com/@gamepieengine'"
+readme = "README.md"
+authors = [
+  { name = "Rudolf M." }
+]
+license = "MIT"
+requires-python = ">=3.7"
+dependencies = [
+  "numpy",
+  "pygame",
+  "opencv-python",
+  "pyinstaller"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: Microsoft :: Windows"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"gamepie" = [
+  "assets/*",
+  "assets/icon/*",
+  "assets/backstage/*",
+  "assets/cat_space/*",
+  "gui/*",
+  "input/*",
+  "load/*",
+  "draw/*"
+]
