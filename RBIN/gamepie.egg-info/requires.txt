@@ -1,4 +1,0 @@
-numpy
-pygame
-opencv-python
-pyinstaller
