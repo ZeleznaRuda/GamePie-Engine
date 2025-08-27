@@ -3,6 +3,7 @@
 ## Description
 
 GamePie is a simple library for creating 2d games using the pygame library.
+Can be used on MS Windows or Linux (Maybe even on 'darwin', I haven't tried it)
 
 ## Installation
 
@@ -12,4 +13,5 @@ GamePie is a simple library for creating 2d games using the pygame library.
 
 ```bash
 pip install .
+
 
