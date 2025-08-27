@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gamepie"
 version = "0.1.0"
-description = "Library to create 2d games, powered by pygame :: Gamepie youtube: 'https://www.youtube.com/@gamepieengine'"
+description = "Library to create 2D games, powered by pygame :: Gamepie YouTube: 'https://www.youtube.com/@gamepieengine'"
 readme = "README.md"
 authors = [
   { name = "Rudolf M." }
@@ -15,12 +15,12 @@ requires-python = ">=3.7"
 dependencies = [
   "numpy",
   "pygame",
-  "opencv-python",
+  "tkinter"
   "pyinstaller"
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "Operating System :: Microsoft :: Windows"
+  "Operating System :: MS Windows :: Linux"
 ]
 
 [tool.setuptools]
@@ -33,11 +33,15 @@ where = ["src"]
 [tool.setuptools.package-data]
 "gamepie" = [
   "assets/*",
-  "assets/icon/*",
-  "assets/backstage/*",
-  "assets/cat_space/*",
+  "assets/**/*",
   "gui/*",
+  "gui/**/*",
   "input/*",
+  "input/**/*",
   "load/*",
-  "draw/*"
+  "load/**/*",
+  "draw/*",
+  "draw/**/*",
+  "plugins/*",
+  "plugins/**/*"
 ]

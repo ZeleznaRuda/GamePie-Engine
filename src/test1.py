@@ -1,20 +1,18 @@
-import pygame
-pygame.init()
+import gamepie # << import library
 
-screen = pygame.display.set_mode((500, 200))
-pygame.display.set_caption("Fonty v Arch Linux")
+screen = gamepie.Window(title="Test", flags=gamepie.utils.NOFRAME) # << create borderless window                                  # << create clock
 
-# Načtení systémového fontu
-font = pygame.font.SysFont("DejaVu Sans", 40)  
+nyan = gamepie.load.Frames("nyancat", ms=60) # << load animation
+gamepie.mixer.Music("nyansound")                # << load and play music
+anim = gamepie.draw.Animation(screen, animation=nyan, size=(800, 600), camera=gamepie.utils.uicamera) # << create animation
 
-text_surface = font.render("Ahoj, Arch!", True, (255, 255, 255))
-screen.blit(text_surface, (50, 50))
-pygame.display.flip()
+anim.play() # << start animation
 
-# Hlavní smyčka
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-pygame.quit()
+def update():           # << main loop (mandatory!)
+    screen.fill((0, 0, 0)) # << clear screen (black)
+    dt = screen.fps.tick()  # << delta time calculation
+    anim.draw()            # << draw animation
+    screen.flip()          # << update the screen
+
+screen.run()   # << start application (mandatory!)
+gamepie.quit() # << exit

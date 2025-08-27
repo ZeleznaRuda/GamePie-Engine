@@ -4,7 +4,6 @@ import datetime
 import os
 
 from ..core import _gp_log
-from ..utils.TKmessagebox import info
         
 def quit():
     _gp_log(f"program was quit")
@@ -67,6 +66,7 @@ def unpackobj(obj):
     w,h = obj.size
     return x,y,w,h
 def screenshot(surface, name=f"screenshot.jpg", msg=True):
+    from .TKmessagebox import info
     surface = surface()
     pygame.image.save(surface, name)
     if msg:
