@@ -151,3 +151,31 @@ def image(surface, image, color=(255, 255, 255), rect=None, angle=0,flip=(False,
         target.blit(rotated(), (rotated_rect.x, rotated_rect.y))
     else:
         target.blit(scaled(), (x, y))
+
+def polygon(surface, color=(255, 255, 255), points=None, width=0, angle=0, flip=(False, False)):
+    # ///ai-CoP
+
+    surface = surface()
+    if points is None or len(points) < 3:
+        raise ValueError("You must provide at least 3 points for a polygon.")
+
+    xs, ys = zip(*points)
+    min_x, min_y = min(xs), min(ys)
+    max_x, max_y = max(xs), max(ys)
+    w, h = max_x - min_x, max_y - min_y
+    if w <= 0 or h <= 0:
+        raise ValueError("Cannot scale to non-positive size")
+
+    offset_points = [(x - min_x, y - min_y) for x, y in points]
+    temp = Surface((w, h))
+    pygame.draw.polygon(temp(), color, offset_points, width)
+
+    if flip != (False, False):
+        temp = temp.transform.flip(*flip)
+    if angle != 0:
+        rotated = temp.transform.rotate(angle)
+        rotated_rect = rotated.rect
+        rotated_rect.center = (min_x + w // 2, min_y + h // 2)
+        surface.blit(rotated(), rotated_rect.topleft)
+    else:
+        surface.blit(temp(), (min_x, min_y))

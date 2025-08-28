@@ -3,6 +3,7 @@ from ..rect import Rect
 from ..draw import label
 from ...cam import Camera
 from ....utils import uicamera
+from ...load import Font
 import re
 class Label:
     def __init__(self, surface, position=(0, 0), size=(60, 50), color=(0, 0, 0), background_color=(255, 255, 255),
@@ -21,7 +22,7 @@ class Label:
 
         self._visible = visible 
         self.__outline = False
-        self.__outline_color = (0,0,0)
+        self.__outline_color = (0, 0, 0)
         self.__outline_size = 3
 
         self._w, self._h = size
@@ -151,7 +152,12 @@ class Label:
         self._w, self._h = value
         self.__update_rect()
 
-
+    def outline(self, color, size):
+        self.__outline = True
+        self.__outline_color=color
+        self.__outline_size =size
+        return self
+    
     def __apply_anchor(self, rect):
         if hasattr(rect, self._anchor):
             setattr(rect, self._anchor, (self._x, self._y))
@@ -170,12 +176,27 @@ class Label:
     def _split_by(self):
         return [x.strip() for x in re.split(r'[;\n]+', self._text) if x.strip()]
 
+
     def __draw_label(self):
         lines = self._split_by()
         line_height = self.height
-        
+
         for i, l in enumerate(lines):
             y_offset = self.rect.y + i * line_height // 2
+
+
+            if self.__outline:
+                outline_font = Font(size=self._font.size + self.__outline_size)
+                outline_y_offset = self.__outlinerect.y + i * line_height // 2
+                label(
+                    surface=self.surface,
+                    text=l,
+                    font=outline_font,
+                    color=self.__outline_color,
+                    background_color=self._background_color,
+                    anti_aliasing=self._anti_aliasing,
+                    rect=(self.__outlinerect.x, outline_y_offset, self.__outlinerect.width, line_height)
+                )
             label(
                 surface=self.surface,
                 text=l,
@@ -185,7 +206,6 @@ class Label:
                 anti_aliasing=self._anti_aliasing,
                 rect=(self.rect.x, y_offset, self.rect.width, line_height)
             )
-
     def draw(self):
         if not self._visible:
             return

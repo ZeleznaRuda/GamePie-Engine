@@ -1,18 +1,22 @@
-import gamepie # << import library
+import gamepie 
 
-screen = gamepie.Window(title="Test", flags=gamepie.utils.NOFRAME) # << create borderless window                                  # << create clock
+screen = gamepie.Window(title="Test", flags=gamepie.utils.RESIZABLE)                          
 
-nyan = gamepie.load.Frames("nyancat", ms=60) # << load animation
-gamepie.mixer.Music("nyansound")                # << load and play music
-anim = gamepie.draw.Animation(screen, animation=nyan, size=(800, 600), camera=gamepie.utils.uicamera) # << create animation
+e = gamepie.draw.Ellipse(screen, position=(0, 0), size=(200, 100), color=(255, 0, 0), anchor=gamepie.utils.CENTER).outline((0, 0, 0), 5)
 
-anim.play() # << start animation
+def update():         
+    screen.fill((255, 255, 255))
+    dt = screen.fps.tick()
+    gamepie.draw.polygon(
+        surface=screen,                      # The target surface (e.g., your game window)
+        color=(0, 255, 0),                   # Polygon color (green)
+        points=[(0, 0), (800, 0), (400, 300)],  # List of (x, y) vertices
+        width=5,                             # 0 for filled polygon, >0 for outline
+        angle=0,                             # Rotation angle in degrees
+        flip=(False, False)                  # Flip horizontally/vertically
+    )
+    e.draw()
+    screen.flip()
 
-def update():           # << main loop (mandatory!)
-    screen.fill((0, 0, 0)) # << clear screen (black)
-    dt = screen.fps.tick()  # << delta time calculation
-    anim.draw()            # << draw animation
-    screen.flip()          # << update the screen
-
-screen.run()   # << start application (mandatory!)
-gamepie.quit() # << exit
+screen.run()   
+gamepie.quit() 

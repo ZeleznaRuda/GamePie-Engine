@@ -4,7 +4,7 @@ screen = gamepie.Window(title="Parkour master", flags=gamepie.utils.RESIZABLE)
 
 
 
-count = gamepie.draw.gui.Label(screen,position=(0, 0), font=gamepie.load.Font(size=20),text="Time: null",anti_aliasing=True,background_color=None,visible=True)
+count = gamepie.draw.gui.Label(screen,position=(0, 0), font=gamepie.load.Font(size=20),text="Time: null",anti_aliasing=True,background_color=None,visible=True).outline((0, 0, 255), 24)
 
 
 gamecamera = gamepie.Camera(position=(0, 0), zoom=1, anchor="center")
@@ -19,13 +19,12 @@ end_flag_textures = gamepie.Texture("platformplug.end_flag")
 player_run = gamepie.Frames(r"platformplug.jumper_go")
 player_jump = gamepie.Frames(r"platformplug.jumper_jump")
 player_stand = gamepie.Frames(r"platformplug.jumper_stand")
-death_sound = gamepie.mixer.Sound(gamepie.Audio("platformplug.jumper_death_sound",volume=50))
+death_sound = gamepie.mixer.Sound(gamepie.Audio("platformplug.jumper_death_sound",volume=1))
 jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump"))
 
 player = gamepie.draw.Animation(screen,position=(400 ,-480), frames=player_run,ms=300, size=(45 * 2, 30 * 3), camera=gamecamera,anchor=gamepie.utils.CENTER)
 
-youwin_label = gamepie.draw.gui.Label(screen,position=(2480, -480), font=gamepie.load.Font("DejaVu Sans",50),text="Vyhrál jsi :)",background_color=None,anti_aliasing=True ,camera=gamecamera,anchor=gamepie.utils.TOPLEFT,visible=True)
-
+youwin_label = gamepie.draw.gui.Label(screen,position=(2480, -480), font=gamepie.load.Font("DejaVu Sans",50),text="Vyhrál jsi :)",background_color=None,anti_aliasing=True ,camera=gamecamera,anchor=gamepie.utils.TOPLEFT,visible=True).outline((0, 0, 0), 3)
 
 spikes = gamepie.utils.Objects(
     gamepie.draw.Image(screen, texture=spike_textures, position=(380, -73), size=(64, 64), camera=gamecamera, anchor=gamepie.utils.CENTER),
