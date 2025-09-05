@@ -3,6 +3,7 @@ from gamepie.core.rect import Rect
 from gamepie.core.draw.image import Image
 from gamepie.core.load.texture import Texture
 from gamepie.core.load.font import Font
+from gamepie.core.load.texture import Texture
 from gamepie.core.draw.gui.lable import Label
 from gamepie.core.event import mouse
 from gamepie.core.time import wait

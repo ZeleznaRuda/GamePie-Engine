@@ -34,6 +34,13 @@ MIDBOTTOM = "midbottom"
 MIDLEFT = "midleft"
 MIDRIGHT = "midright"
 
+MSGBOX_ERROR = 0
+MSGBOX_WARNING = 10
+MSGBOX_MSG = 20
+MSGBOX_INFO = 40
+MSGBOX_QUESTION = 30
+MSGBOX_SCREENSHOT = 50
+
 _colors = {
 "WHITE"  : (255, 255, 255),
 "BLACK"  : (0, 0, 0),

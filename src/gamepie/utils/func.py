@@ -1,8 +1,14 @@
 import sys
 import pygame
-import datetime
+import platform
 import os
+import subprocess
+import inspect
 
+def get_mypath():
+    frame = inspect.stack()[1]
+    caller_file = frame.filename
+    return os.path.abspath(caller_file)
 from ..core import _gp_log
         
 def quit():
@@ -65,12 +71,24 @@ def unpackobj(obj):
     x,y = obj.pos
     w,h = obj.size
     return x,y,w,h
+
+def venv_start(name=None):
+    if name is None:
+        name = "main"  # nebo get_mypath(), podle toho co máš
+
+    if platform.system() == "Windows":
+        python_exe = os.path.join("venv", "Scripts", "python.exe")
+    else:
+        python_exe = os.path.join("venv", "bin", "python")
+
+    subprocess.run([python_exe, f"{name}.py"])
+
 def screenshot(surface, name=f"screenshot.jpg", msg=True):
-    from .TKmessagebox import info
+    from .gpbox import Messagebox as msgbox
     surface = surface()
     pygame.image.save(surface, name)
     if msg:
-        info("Info",f"Screenshot was save in '{name}' .")
+        msgbox(f"Screenshot was save in \n'{name}' .").show(type=50)
 
 def build(script_path: str, icon=None, windowed=False, output_dir=None):
     import subprocess

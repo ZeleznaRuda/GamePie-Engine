@@ -15,12 +15,13 @@ if os.environ.get('GAMEPIE_SHOW_WELCOME', '1') == '1':
 print(f"Using: {platform.platform()}\n")
 
 from .. import utils    
-from .error import *
-from .load import *
-from .event import *
+from . import error
 from .quitFunc import quit
+from . import load
+from .event import *
 from . import mixer
 from . import draw
+
 
 from .time import wait, _wait_cache_, asyncWait
 from .point import Point

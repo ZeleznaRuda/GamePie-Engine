@@ -2,7 +2,7 @@ from gamepie import key
 
 # my/ai
 class PlatformController:
-    def __init__(self, player, camera, objects,camera_offset=(0,0), speed=0.05, jump_power=10, gravity=0.5, c_key_enabled=True, movement_3_key=("a","d","space")):
+    def __init__(self, player, camera, objects,camera_offset=(0,0), gravity=2, speed=1, jump_power=24, c_key_enabled=True, movement_3_key=("a","d","space")):
         self.player = player
         self.camera = camera
         self.objects = objects

@@ -160,6 +160,7 @@ class Image:
 
     @property
     def collision(self): return _Collision(self)
-
+    def copy(self):
+        return self
     def __repr__(self):
         return repr(f"<Image position=({self._x}, {self._y}) size=({self._w}, {self._h}) color=({self._color}) texture='{self.__texture}'>")

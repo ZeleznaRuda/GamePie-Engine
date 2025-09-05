@@ -1,7 +1,7 @@
 import gamepie
 
 
-screen = gamepie.Window(title="Test", flags=gamepie.utils.dict.RESIZABLE)
+screen = gamepie.Window(title="Test")
 fps = gamepie.Clock(60)
 
 # textury
@@ -36,6 +36,7 @@ for row in range(rows):
 player = gamepie.draw.Image(screen, avatar_texture, camera=camera, size=(32,36))
 
 controller = gamepie.plugins.Controllers.RPGController(player=player, camera=camera, objects=objects, speed=0.05, movement_4_key=("up","down","left","right"))
+
 controller.c_key_enabled = True  # klávesa C funguje
 
 def update():

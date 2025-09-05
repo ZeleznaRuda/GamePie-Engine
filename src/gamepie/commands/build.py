@@ -2,7 +2,7 @@ import sys
 import argparse
 
 def main():
-    from ..func import build
+    from ..utils.func import build
 
     parser = argparse.ArgumentParser(
         description="Build a GamePie script into an executable."

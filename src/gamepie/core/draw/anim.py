@@ -180,3 +180,5 @@ class Animation:
 
     def __repr__(self):
         return f"<AnimationSprite position=({self._x}, {self._y}) size=({self._w}, {self._h}) color=({self._color}) texture='{self.__animation}'>"
+    def copy(self):
+        return self

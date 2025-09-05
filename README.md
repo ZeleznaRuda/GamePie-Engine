@@ -53,6 +53,16 @@ source venv/bin/activate
 pip install .
 ```
 
+<<<<<<< HEAD
+=======
+### Run (with virtual environment)
+```bash
+python -m venv venv
+source venv/bin/activate
+python <name>.py
+```
+
+>>>>>>> e1b008a (add Messagebox and fix problems)
 ---
 
 ## Modules & Objects

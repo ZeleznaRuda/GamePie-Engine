@@ -73,4 +73,5 @@ class Line:
 
     @color.setter
     def color(self, value): self._color = value
-
+    def copy(self):
+        return self

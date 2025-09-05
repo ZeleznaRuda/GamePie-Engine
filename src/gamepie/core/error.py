@@ -1,4 +1,2 @@
-class ZeroError(Exception):
-    pass
-class SizeError(Exception):
+class Error(Exception):
     pass

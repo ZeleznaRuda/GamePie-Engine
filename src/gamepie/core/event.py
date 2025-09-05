@@ -4,8 +4,8 @@ pygame.init()
 
 class _Mouse:
     def __init__(self):
-        self.mouse_x = 0
-        self.mouse_y = 0
+        self._mouse_x = 0
+        self._mouse_y = 0
         self._mousewheel = 0
         
         self._left = False
@@ -14,7 +14,7 @@ class _Mouse:
         self._cursor = CURSOR_ARROW
         
     def update(self, events):
-        self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+        self._mouse_x, self._mouse_y = pygame.mouse.get_pos()
         self._left, self._middle, self._right = pygame.mouse.get_pressed()
         pygame.mouse.set_cursor(self._cursor)      
 
@@ -24,16 +24,16 @@ class _Mouse:
 
  
     def get(self):
-        return [(self.mouse_x, self.mouse_y),self._left, self._middle, self._right, self._mousewheel] 
+        return [(self._mouse_x, self._mouse_y),self._left, self._middle, self._right, self._mousewheel] 
 
     @property
-    def x(self): return self.mouse_x
+    def x(self): return self._mouse_x
 
     @property
-    def y(self): return self.mouse_y
+    def y(self): return self._mouse_y
 
     @property
-    def pos(self): return self.mouse_x, self.mouse_y
+    def pos(self): return self._mouse_x, self._mouse_y
 
     @property
     def left(self): return self._left
@@ -46,11 +46,18 @@ class _Mouse:
 
     @property
     def mousewheel(self): return self._mousewheel
+
     @property
     def cursor(self): return self._cursor
     @cursor.setter
     def cursor(self, value): 
         self._cursor = value
+
+    @property
+    def camera(self): return self._camera
+    @camera.setter
+    def camera(self, value): 
+        self._camera = value
 
 class _Key:
     def __init__(self):

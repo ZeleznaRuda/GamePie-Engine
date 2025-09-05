@@ -1,5 +1,5 @@
-from ..utils import anchor as ar
-from ..utils import anchor
+from ..utils.func import anchor as ar
+from ..utils.func import anchor
 from .collision import _Collision
 class Rect:
     def __init__(self, x, y, width, height, anchor="topleft"):

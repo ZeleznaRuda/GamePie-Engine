@@ -1,13 +1,14 @@
 import random
 import gamepie
+
 screen = gamepie.Window(title="Adventure Platformer", flags=gamepie.utils.RESIZABLE)
 gamecamera = gamepie.Camera(position=(0, 0), zoom=1, anchor="center")
 
 
-player_run = gamepie.Frames(r"platformplug.jumper_go")
-player_jump = gamepie.Frames(r"platformplug.jumper_jump")
-player_stand = gamepie.Frames(r"platformplug.jumper_stand")
-jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump"))
+player_run = gamepie.load.Frames(r"platformplug.jumper_go")
+player_jump = gamepie.load.Frames(r"platformplug.jumper_jump")
+player_stand = gamepie.load.Frames(r"platformplug.jumper_stand")
+jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump",volume=0.3))
 player = gamepie.draw.Animation(
     screen, position=(1000, -1000), frames=player_run, ms=300,
     size=(45*2, 30*3), camera=gamecamera, anchor=gamepie.utils.CENTER
@@ -50,7 +51,7 @@ map_blocks = list(map.all())
 
 
 
-controller = gamepie.plugins.Controllers.PlatformController(player=player, camera=gamecamera,camera_offset=(-100,-100), gravity=0.8, speed=0.2, jump_power=13, objects=map(),movement_3_key=("left","right","up"))
+controller = gamepie.plugins.Controllers.PlatformController(player=player, camera=gamecamera,camera_offset=(-100,-100), gravity=2, speed=1, jump_power=24, objects=map(),movement_3_key=("left","right","up"))
 
 def update():
     dt = screen.fps.tick()

@@ -10,16 +10,16 @@ count = gamepie.draw.gui.Label(screen,position=(0, 0), font=gamepie.load.Font(si
 gamecamera = gamepie.Camera(position=(0, 0), zoom=1, anchor="center")
 
 
-player_texture = gamepie.Texture("platformplug.jumper")
-spike_textures = gamepie.Texture("platformplug.spike")
+player_texture = gamepie.load.Texture("platformplug.jumper")
+spike_textures = gamepie.load.Texture("platformplug.spike")
 
-end_flag_textures = gamepie.Texture("platformplug.end_flag")
+end_flag_textures = gamepie.load.Texture("platformplug.end_flag")
 
 
-player_run = gamepie.Frames(r"platformplug.jumper_go")
-player_jump = gamepie.Frames(r"platformplug.jumper_jump")
-player_stand = gamepie.Frames(r"platformplug.jumper_stand")
-death_sound = gamepie.mixer.Sound(gamepie.Audio("platformplug.jumper_death_sound",volume=1))
+player_run = gamepie.load.Frames(r"platformplug.jumper_go")
+player_jump = gamepie.load.Frames(r"platformplug.jumper_jump")
+player_stand = gamepie.load.Frames(r"platformplug.jumper_stand")
+death_sound = gamepie.mixer.Sound(gamepie.load.Audio("platformplug.jumper_death_sound",volume=1))
 jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump"))
 
 player = gamepie.draw.Animation(screen,position=(400 ,-480), frames=player_run,ms=300, size=(45 * 2, 30 * 3), camera=gamecamera,anchor=gamepie.utils.CENTER)
