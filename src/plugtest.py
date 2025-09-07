@@ -1,5 +1,5 @@
 import gamepie
-
+import random
 
 screen = gamepie.Window(title="Test")
 fps = gamepie.Clock(60)
@@ -21,7 +21,7 @@ start_x = -grid_size * cols // 2
 start_y = -grid_size * rows // 2
 for row in range(rows):
     for col in range(cols):
-        choice = gamepie.utils.rnd.choice(["tree", "bush", ] + ["empty"] * 6)
+        choice = random.choice(["tree", "bush", ] + ["empty"] * 6)
         pos = (start_x + col * grid_size, start_y + row * grid_size)
         if choice == "tree":
             obj = gamepie.draw.Image(screen, texture=tree_texture, position=pos,
@@ -41,9 +41,8 @@ controller.c_key_enabled = True  # klávesa C funguje
 
 def update():
     dt = fps.tick()
-    print(controller.status)
     controller.update(dt)
-
+    print("A")
     screen.fill((0,80,0))
     for obj in objects:
         obj.draw()

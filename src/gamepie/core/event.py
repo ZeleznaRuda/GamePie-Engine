@@ -92,8 +92,11 @@ class _Key:
 
     def is_down(self, keyname: str):
         try:
-            keycode = pygame.key.key_code(keyname.lower())
-            return self._pressed[keycode]
+            if keyname == "ctrl":
+                return self._pressed[pygame.K_LCTRL] or self._pressed[pygame.K_RCTRL]
+            else:
+                keycode = pygame.key.key_code(keyname.lower())
+                return self._pressed[keycode]
         except:
             return False
 

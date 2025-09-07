@@ -1,8 +1,18 @@
-import gamepie
-if __name__ == "__main__":
-    w1 = gamepie.Window.spawn(title="První okno", size=(400, 300))
-    w2 = gamepie.Window.spawn(title="Druhé okno", size=(600, 400))
-    
-    gamepie.Window.join()
+import pygame
 
+pygame.init()
+info = pygame.display.Info()
+surface = pygame.display.set_mode((info.current_w, info.current_h))
+pygame.display.set_caption("Maximized")
 
+# --- smyčka hry ---
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    surface.fill((100, 150, 200))
+    pygame.display.flip()
+
+pygame.quit()

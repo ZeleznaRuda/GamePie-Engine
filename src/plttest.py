@@ -1,6 +1,6 @@
 import gamepie
 
-screen = gamepie.Window(title="Parkour master", flags=gamepie.utils.RESIZABLE)
+screen = gamepie.Window(title="Parkour master", flags=gamepie.utils.RESIZABLE,print_fps=True)
 
 
 
@@ -19,7 +19,7 @@ end_flag_textures = gamepie.load.Texture("platformplug.end_flag")
 player_run = gamepie.load.Frames(r"platformplug.jumper_go")
 player_jump = gamepie.load.Frames(r"platformplug.jumper_jump")
 player_stand = gamepie.load.Frames(r"platformplug.jumper_stand")
-death_sound = gamepie.mixer.Sound(gamepie.load.Audio("platformplug.jumper_death_sound",volume=1))
+death_sound = gamepie.mixer.Sound(gamepie.load.Audio("platformplug.jumper_death_sound",volume=10))
 jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump"))
 
 player = gamepie.draw.Animation(screen,position=(400 ,-480), frames=player_run,ms=300, size=(45 * 2, 30 * 3), camera=gamecamera,anchor=gamepie.utils.CENTER)
@@ -57,7 +57,7 @@ nmsp = gamepie.utils.Namespace({
 
 
 
-controller = gamepie.plugins.Controllers.PlatformController(player=player,camera=gamecamera,speed=0.2,jump_power=13, objects=map(),movement_3_key=("left","right","up"))
+controller = gamepie.plugins.Controllers.PlatformController(player=player,camera=gamecamera,gravity=2, speed=0.5, jump_power=24, objects=map(),movement_3_key=("left","right","up"))
 
 tck = 0
 
@@ -65,7 +65,6 @@ def update():
     global tck
     dt = screen.fps.tick()
     tck += 1
-    
     controller.update(dt)
     for spike in spikes.all():
         if spike.collision.rect(player,offset=(32, 0,-48, 0)) or player.y >= 500:

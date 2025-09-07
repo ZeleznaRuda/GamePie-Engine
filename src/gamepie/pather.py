@@ -20,17 +20,22 @@ def _gp_path_register_del(name):
         paths.pop(name, None)
 paths = {
     "pie":            resource_path("assets/pie.png"),
-    "brick":          resource_path("assets/brick.png"),
+
+    "stone_brick":    resource_path("assets/stone.brick.block.png"),
+    "grass":          resource_path("assets/grass.on.dirt.block.png"),
+    "dirt":           resource_path("assets/dirt.block.png"),
+    "stone":          resource_path("assets/stone.block.png"),
+    "brick":          resource_path("assets/brick.block.png"),
+    "oak":            resource_path("assets/oak.log.block.png"),
+    "glass":          resource_path("assets/glass.block.png"),
+    "leaves":         resource_path("assets/leaves.block.png"),
+    "oak_planks":     resource_path("assets/oak.planks.block.png"),
+    "door":           resource_path("assets/door.png"),
+    "stone_stairs":   resource_path("assets/stone.stairs.png"),
+
+    
+
     "mushroom":       resource_path("assets/mushroom.png"),
     "button_texture": resource_path("assets/button_texture.png"),
     "music":          resource_path("assets/music.mp3"),
-    "pingsound":      resource_path("assets/ping-pong-ball.mp3"),
-    "nomnom":         resource_path("assets/nom_nom.mp3"),
-    "pacman":         resource_path("assets/pacman.png"),
-    "tree":           resource_path("assets/tree.png"),
-    "bush":           resource_path("assets/bush.png"),
-    "avatar":         resource_path("assets/avatar.png"),
-    "nyancat":        resource_path("assets/cat_space"),
-    "elephant_run":   resource_path("assets/elephant_run-giphy.gif"),
-    "bonk_doge":      resource_path("assets/bonk_doge-tenor.gif"),
 }

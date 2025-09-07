@@ -19,7 +19,7 @@ def generate_adventure_world():
 
     TILE_WIDTH = 120
     TILE_HEIGHT = 680
-    WORLD_LENGTH = 255
+    WORLD_LENGTH = 888
     blocks = []
     current_y = 0
     for i in range(WORLD_LENGTH):
@@ -79,7 +79,9 @@ def update():
         player.animation = player_stand
         player.play()
     screen.fill(gamepie.utils.Color("SKY")())
-    map.draw()
+    for block in map.objects:
+        if gamecamera.is_in_view((block.pos), size=(block.size), screen_size=(screen.w, screen.h)):
+            block.draw()
     player.draw()
     screen.flip()
 

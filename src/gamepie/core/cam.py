@@ -11,6 +11,37 @@ class Camera:
         self._x += dx
         self._y += dy
 
+    def is_in_view(self, pos, size=(0, 0), margin=0, screen_size=None):
+
+        if screen_size is None:
+            raise ValueError("screen_size must be specified")
+
+        width, height = screen_size
+
+        cam_left   = self._x - margin -width // 2 
+        cam_top    = self._y - margin -height // 2 
+        cam_right  = self._x + width * 2 + margin
+        cam_bottom = self._y + height * 2 + margin
+
+        x, y = pos
+
+        w, h = size
+
+        return (x + w > cam_left and x < cam_right) and (y + h > cam_top and y < cam_bottom)
+
+    def get_view_bounds(self, screen_size, margin=0):
+
+
+        top_left = self.screen_to_world(0, 0, screen_size)
+        bottom_right = self.screen_to_world(screen_size[0], screen_size[1], screen_size)
+
+        return (
+            top_left[0] - margin,    # left
+            top_left[1] - margin,    # top
+            bottom_right[0] + margin,  # right
+            bottom_right[1] + margin   # bottom
+        )
+
     def apply(self, rect, screen_size):
         if not isinstance(rect, Rect):
             raise TypeError(f"Expected Rect, got {type(rect)}")
@@ -34,12 +65,15 @@ class Camera:
 
     @property
     def pos(self):
+        """
+        Vrací pozici kamery podle anchoru
+        """
         return self._x, self._y
 
     @pos.setter
     def pos(self, value):
         self._x, self._y = value
-        
+
     @property
     def x(self):
         return self._x
@@ -55,7 +89,7 @@ class Camera:
     @y.setter
     def y(self, value):
         self._y = value
-        
+
     @property
     def zoom(self):
         return self._zoom

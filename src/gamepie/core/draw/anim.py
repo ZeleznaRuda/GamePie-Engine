@@ -71,6 +71,8 @@ class Animation:
             return
         if not self._enable:
             return
+        if not self._camera.is_in_view((self.pos), size=(self.size), screen_size=(self.surface.w, self.surface.h)):
+            return
         self.__update_rect()
         if self.__play:
             self.texture = self.__runplay()

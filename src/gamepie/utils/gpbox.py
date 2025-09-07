@@ -3,13 +3,13 @@ import platform
 from ..pather import resource_path
 from ..core.mixer import Sound
 from ..core.load import Audio
-# ai //t:my
+# ai//t:my
 class Messagebox:
     def __init__(self, msg, title=None):
         self._title = title
         self._msg = msg
-        self.result = None  # výsledek pro tlačítka
-        self.s = Sound(Audio(resource_path("assets/msgIco/music-box.mp3"), volume=10))
+        self.result = None 
+        self.s = Sound(Audio(resource_path("assets/msgIco/music-box.mp3"), volume=10,msg=False))
         self.s.play()
 
     def _get_system_theme(self):
@@ -94,14 +94,14 @@ class Messagebox:
         icon_type = int(type_str[0])
         button_type = int(type_str[1])
 
- 
         icons = {
             0: ("Error", "src/gamepie/assets/msgIco/gperr.png"),
-            1: ("Warning", "src/gamepie/assets/msgIco/gpwarn.png"),
-            2: ("Info", "src/gamepie/assets/msgIco/gpmsg.png"),
-            3: ("Question", "src/gamepie/assets/msgIco/gpqest.png"),
-            4: ("Information", "src/gamepie/assets/msgIco/gpinfo.png"),
-            5: ("Screenshot", "src/gamepie/assets/msgIco/gpscrshot.png"),
+            1: ("Error", "src/gamepie/assets/msgIco/gperr.png"),
+            2: ("Warning", "src/gamepie/assets/msgIco/gpwarn.png"),
+            3: ("Info", "src/gamepie/assets/msgIco/gpmsg.png"),
+            4: ("Question", "src/gamepie/assets/msgIco/gpqest.png"),
+            5: ("Information", "src/gamepie/assets/msgIco/gpinfo.png"),
+            6: ("Screenshot", "src/gamepie/assets/msgIco/gpscrshot.png"),
         }
         title, icon_path = icons.get(icon_type, icons[0])
         if self._title:
@@ -133,7 +133,6 @@ class Messagebox:
             self.result = value
             root.destroy()
 
-  
         button_map = {
             0: [],  # žádná tlačítka
             1: [("OK", lambda: set_result("ok"))],
@@ -141,17 +140,17 @@ class Messagebox:
             3: [("Yes", lambda: set_result("yes")), ("No", lambda: set_result("no")), ("Cancel", lambda: set_result("cancel"))],
             4: [("OK", lambda: set_result("ok"))], 
             5: [("Close", lambda: set_result("close"))],
-            67:[("67", lambda: set_result("six seven"),),("41", lambda: set_result("four one"))],
+            67:[("67", lambda: set_result("six seven")), ("41", lambda: set_result("four one"))],
         }
 
         if button_type in button_map and button_map[button_type]:
             button_frame = tk.Frame(root, bg=bg_color)
-            button_frame.pack(pady=10)
+            button_frame.pack(pady=10, anchor="e")
             for text, cmd in button_map[button_type]:
                 style = ttk.Style()
                 style.configure("Custom.TButton", padding=0, font=("Arial", 11))
                 btn = ttk.Button(button_frame, text=text, command=cmd, style="Custom.TButton")
-                btn.pack(side="left", padx=5)
+                btn.pack(side="right", padx=5)
 
         root.resizable(False, False)
         root.after(30000, lambda: root.destroy())

@@ -88,7 +88,67 @@ def screenshot(surface, name=f"screenshot.jpg", msg=True):
     surface = surface()
     pygame.image.save(surface, name)
     if msg:
-        msgbox(f"Screenshot was save in \n'{name}' .").show(type=50)
+        msgbox(f"Screenshot was save in \n'{name}' .").show(type=61)
+
+
+def gpdata_save(objects, filename="objects.dat"):
+    import pickle
+    import json
+    data = []
+
+    for obj in objects:
+        if isinstance(obj, dict):
+            obj_data = obj.copy()
+        else:
+            obj_data = {}
+            obj_data.update(obj.__dict__)
+            # uložíme i properties
+            for name, attr in inspect.getmembers(type(obj), lambda o: isinstance(o, property)):
+                try:
+                    obj_data[name] = getattr(obj, name)
+                except Exception:
+                    pass
+            obj_data['_class'] = type(obj).__name__
+
+        data.append(obj_data)
+
+    ext = os.path.splitext(filename)[1].lower()
+    try:
+        if ext == ".json":
+            with open(filename, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4)
+        else:  # pickle jako default
+            with open(filename, "wb") as f:
+                pickle.dump(data, f)
+        _gp_log(f"objects saved to '{filename}'")
+    except Exception as e:
+        _gp_log(f"[fatal error]: could not save objects '{e}'")
+
+
+def gpdata_load(filename="objects.dat"):
+    import pickle
+    import json
+    if not os.path.exists(filename):
+        _gp_log("no saved file found.")
+        return []
+
+    if os.path.getsize(filename) == 0:
+        _gp_log("saved file is empty.")
+        return []
+
+    ext = os.path.splitext(filename)[1].lower()
+    try:
+        if ext == ".json":
+            with open(filename, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        else:  # pickle
+            with open(filename, "rb") as f:
+                data = pickle.load(f)
+        _gp_log(f"objects loaded from '{filename}'")
+        return data
+    except (json.JSONDecodeError, EOFError, Exception) as e:
+        _gp_log(f"[fatal error]: file corrupted or invalid: {e}")
+        return []
 
 def build(script_path: str, icon=None, windowed=False, output_dir=None):
     import subprocess

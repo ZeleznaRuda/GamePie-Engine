@@ -5,7 +5,7 @@ from .. import _gp_log
 pygame.mixer.init()
 
 class Audio:
-    def __init__(self, path, volume=5,mod=False):
+    def __init__(self, path, volume=5,mod=False,msg=True):
         if mod:
             pygame.init()
             pygame.display.set_mode((1, 1))
@@ -21,7 +21,8 @@ class Audio:
         if not self._path.exists():
             raise FileNotFoundError(f"file '{self._path}' not found.")
         else:
-            _gp_log(f"audio '{self._path}' was loaded")
+            if msg is not False:
+                _gp_log(f"audio '{self._path}' was loaded")
 
         self._load()
 

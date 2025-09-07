@@ -1,5 +1,5 @@
 import pygame
-from ...pather import paths
+from ...pather import paths,resource_path
 from ..rect import Rect
 from .. import _gp_log
 class Texture:
@@ -17,10 +17,12 @@ class Texture:
 
         self.path = path 
 
-    def _load(self, path):
+    def _load(self, path: str):
         # ai/
         try:
             resolved_path = paths.get(path, path)
+            if path.startswith("./"):
+                resolved_path = resource_path(path)
             image = pygame.image.load(resolved_path).convert_alpha()
             self._path = resolved_path
             self._original_image = image.copy()

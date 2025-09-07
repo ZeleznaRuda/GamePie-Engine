@@ -13,7 +13,8 @@ def update():
     if menu[4].is_press():
         gamepie.quit()
     screen.fill((255,255,255))
-
+    if gamepie.mouse.mousewheel:
+        print(gamepie.mouse.mousewheel)
     for btn in menu:
         btn.draw()
 

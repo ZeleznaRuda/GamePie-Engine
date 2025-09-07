@@ -1,3 +1,4 @@
+
 class Objects:
     def __init__(self, *items):
         self._items = items 
@@ -44,6 +45,9 @@ class Namespace:
         self._dict[name] = value
     def get(self,name):
         return self._dict[name]
+    def getaslist(self, index):
+        return [list(self._dict.values())[index],list(self._dict.keys())[index]]
+
     
     def __call__(self):
         return dict(self._dict)
