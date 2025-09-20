@@ -21,7 +21,7 @@ class Font:
                 if msg:
                     _gp_log(f"Font file '{font}' was loaded")
             else:
-                raise FileNotFoundError(f"Warning: font '{font}' not found in system or path")
+                raise FileNotFoundError(f"font '{font}' not found in system or path")
         else:
             self.pygame_font = pygame.font.Font(None, 25)
 

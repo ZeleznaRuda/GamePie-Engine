@@ -134,13 +134,12 @@ class Messagebox:
             root.destroy()
 
         button_map = {
-            0: [],  # žádná tlačítka
+            0: [],  
             1: [("OK", lambda: set_result("ok"))],
             2: [("OK", lambda: set_result("ok")), ("Cancel", lambda: set_result("cancel"))],
             3: [("Yes", lambda: set_result("yes")), ("No", lambda: set_result("no")), ("Cancel", lambda: set_result("cancel"))],
             4: [("OK", lambda: set_result("ok"))], 
             5: [("Close", lambda: set_result("close"))],
-            67:[("67", lambda: set_result("six seven")), ("41", lambda: set_result("four one"))],
         }
 
         if button_type in button_map and button_map[button_type]:
@@ -148,11 +147,94 @@ class Messagebox:
             button_frame.pack(pady=10, anchor="e")
             for text, cmd in button_map[button_type]:
                 style = ttk.Style()
-                style.configure("Custom.TButton", padding=0, font=("Arial", 11))
-                btn = ttk.Button(button_frame, text=text, command=cmd, style="Custom.TButton")
+                style.configure("Custom.TButton", padding=2,font=("Arial", 11))
+                btn = ttk.Button(button_frame, text=text, command=cmd, style="Custom.TButton",)
                 btn.pack(side="right", padx=5)
 
         root.resizable(False, False)
         root.after(30000, lambda: root.destroy())
         root.mainloop()
         return self.result
+
+
+
+def gpfile_dialog(typefiles=None, select=0):
+    import ctypes
+    from ctypes import wintypes
+    system = platform.system()
+
+    # --- WINDOWS ---
+    if system == "Windows":
+        GetOpenFileName = ctypes.windll.comdlg32.GetOpenFileNameW
+
+        class OPENFILENAMEW(ctypes.Structure):
+            _fields_ = [
+                ("lStructSize", wintypes.DWORD),
+                ("hwndOwner", wintypes.HWND),
+                ("hInstance", wintypes.HINSTANCE),
+                ("lpstrFilter", wintypes.LPCWSTR),
+                ("lpstrCustomFilter", wintypes.LPWSTR),
+                ("nMaxCustFilter", wintypes.DWORD),
+                ("nFilterIndex", wintypes.DWORD),
+                ("lpstrFile", wintypes.LPWSTR),
+                ("nMaxFile", wintypes.DWORD),
+                ("lpstrFileTitle", wintypes.LPWSTR),
+                ("nMaxFileTitle", wintypes.DWORD),
+                ("lpstrInitialDir", wintypes.LPCWSTR),
+                ("lpstrTitle", wintypes.LPCWSTR),
+                ("Flags", wintypes.DWORD),
+                ("nFileOffset", wintypes.WORD),
+                ("nFileExtension", wintypes.WORD),
+                ("lpstrDefExt", wintypes.LPCWSTR),
+                ("lCustData", wintypes.LPARAM),
+                ("lpfnHook", wintypes.LPVOID),
+                ("lpTemplateName", wintypes.LPCWSTR),
+                ("pvReserved", wintypes.LPVOID),
+                ("dwReserved", wintypes.DWORD),
+                ("FlagsEx", wintypes.DWORD),
+            ]
+
+        def open_dialogWin():
+            buffer = ctypes.create_unicode_buffer(260)  # MAX_PATH
+            ofn = OPENFILENAMEW()
+            ofn.lStructSize = ctypes.sizeof(ofn)
+            ofn.lpstrFile = buffer
+            ofn.nMaxFile = len(buffer)
+
+            # Filters
+            if typefiles is None:
+                filter_str = "All files\0*.*\0"
+            else:
+                filter_str = ""
+                for ext in typefiles:
+                    filter_str += f"{ext.upper()} files\0*{ext}\0"
+                filter_str += "All files\0*.*\0"
+
+            ofn.lpstrFilter = filter_str
+            ofn.nFilterIndex = 1
+            ofn.Flags = 0x00001000 | 0x00000800  # FILEMUSTEXIST | PATHMUSTEXIST
+
+            if GetOpenFileName(ctypes.byref(ofn)):
+                return buffer.value
+            return None
+
+        return open_dialogWin()
+
+    # --- LINUX / MAC ---
+    else:
+        def open_dialogUnix():
+            try:
+                if select == 1:
+                    cmd = ["zenity", "--file-selection", "--directory"]
+                else:
+                    cmd = ["zenity", "--file-selection"]
+                    if typefiles is not None:
+                        patterns = " ".join([f"*{ext}" for ext in typefiles])
+                        cmd.append(f"--file-filter={patterns}")
+
+                result = subprocess.check_output(cmd, text=True).strip()
+                return result if result else None
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                return None
+
+        return open_dialogUnix()

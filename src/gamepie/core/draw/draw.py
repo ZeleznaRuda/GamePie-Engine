@@ -1,4 +1,5 @@
 import pygame
+
 from ..surface import Surface
 
 
@@ -63,9 +64,9 @@ def line(surface, color=(255, 255, 255), start_pos=None, end_pos=None, width=1,a
     if line_points:
         start_pos, end_pos = line_points
     if start_pos is None or end_pos is None:
-        raise ValueError("You must enter start_pos and end_pos, or line_points")
+        raise ValueError("you must enter start_pos and end_pos, or line_points")
     if width <= 0:
-        raise ValueError("Cannot scale to non-positive size")
+        raise ValueError("cannot scale to non-positive size")
 
     min_x = min(start_pos[0], end_pos[0])
     min_y = min(start_pos[1], end_pos[1])
@@ -97,7 +98,7 @@ def label(surface, text,font, color=(255, 255, 255),background_color=(255,255,25
         rect = (0, 0, 60, 50)
     x, y, w, h = rect
     if w <= 0 or h <= 0:
-        raise ValueError("Cannot scale to non-positive size")
+        raise ValueError("cannot scale to non-positive size")
 
     temp = Surface((w, h))
     font = font()
@@ -112,7 +113,7 @@ def image(surface, image, color=(255, 255, 255), rect=None, angle=0,flip=(False,
         elif isinstance(surf, pygame.Surface):
             return Surface(surface=surf)
         else:
-            raise TypeError(f"Cannot wrap object of type {type(surf)} as Surface")
+            raise TypeError(f"cannot wrap object of type {type(surf)} as Surface")
     target = surface()
     target = _ensure_wrapper(target)
 
@@ -120,7 +121,7 @@ def image(surface, image, color=(255, 255, 255), rect=None, angle=0,flip=(False,
         rect = (0, 0, 60, 50)
     x, y, w, h = rect
     if w <= 0 or h <= 0:
-        raise ValueError("Cannot scale to non-positive size")
+        raise ValueError("cannot scale to non-positive size")
 
     raw = image()
     raw = _ensure_wrapper(raw)
@@ -157,14 +158,14 @@ def polygon(surface, color=(255, 255, 255), points=None, width=0, angle=0, flip=
 
     surface = surface()
     if points is None or len(points) < 3:
-        raise ValueError("You must provide at least 3 points for a polygon.")
+        raise ValueError("you must provide at least 3 points for a polygon.")
 
     xs, ys = zip(*points)
     min_x, min_y = min(xs), min(ys)
     max_x, max_y = max(xs), max(ys)
     w, h = max_x - min_x, max_y - min_y
     if w <= 0 or h <= 0:
-        raise ValueError("Cannot scale to non-positive size")
+        raise ValueError("cannot scale to non-positive size")
 
     offset_points = [(x - min_x, y - min_y) for x, y in points]
     temp = Surface((w, h))

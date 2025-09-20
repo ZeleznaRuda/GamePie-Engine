@@ -72,7 +72,7 @@ def unpackobj(obj):
     w,h = obj.size
     return x,y,w,h
 
-def venv_start(name=None):
+def gpvenv_start(name=None):
     if name is None:
         name = "main"  # nebo get_mypath(), podle toho co máš
 
@@ -91,43 +91,47 @@ def screenshot(surface, name=f"screenshot.jpg", msg=True):
         msgbox(f"Screenshot was save in \n'{name}' .").show(type=61)
 
 
-def gpdata_save(objects, filename="objects.dat"):
-    import pickle
-    import json
+import os
+import inspect
+import pickle
+import json
+
+def gpdata_save(objects, filename="objects.dat", type=""):
     data = []
 
     for obj in objects:
         if isinstance(obj, dict):
             obj_data = obj.copy()
-        else:
-            obj_data = {}
-            obj_data.update(obj.__dict__)
-            # uložíme i properties
+        elif hasattr(obj, "__dict__"):
+            obj_data = obj.__dict__.copy()
             for name, attr in inspect.getmembers(type(obj), lambda o: isinstance(o, property)):
                 try:
                     obj_data[name] = getattr(obj, name)
                 except Exception:
                     pass
             obj_data['_class'] = type(obj).__name__
+        else:
+            # podporuje libovolné hodnoty (str, int, list, atd.)
+            obj_data = {"_value": obj}
 
         data.append(obj_data)
 
     ext = os.path.splitext(filename)[1].lower()
+    file_type = type.lower() if type else (".json" if ext == ".json" else "bin")
+
     try:
-        if ext == ".json":
+        if file_type == "json" or ext == ".json":
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4)
-        else:  # pickle jako default
+        else:  # default pickle
             with open(filename, "wb") as f:
                 pickle.dump(data, f)
-        _gp_log(f"objects saved to '{filename}'")
+        _gp_log(f"saved to '{filename}'")
     except Exception as e:
         _gp_log(f"[fatal error]: could not save objects '{e}'")
 
 
-def gpdata_load(filename="objects.dat"):
-    import pickle
-    import json
+def gpdata_load(filename="objects.dat", type=""):
     if not os.path.exists(filename):
         _gp_log("no saved file found.")
         return []
@@ -137,18 +141,21 @@ def gpdata_load(filename="objects.dat"):
         return []
 
     ext = os.path.splitext(filename)[1].lower()
+    file_type = type.lower() if type else (".json" if ext == ".json" else "bin")
+
     try:
-        if ext == ".json":
+        if file_type == "json" or ext == ".json":
             with open(filename, "r", encoding="utf-8") as f:
                 data = json.load(f)
-        else:  # pickle
+        else:  # default pickle
             with open(filename, "rb") as f:
                 data = pickle.load(f)
-        _gp_log(f"objects loaded from '{filename}'")
+        _gp_log(f"loaded from '{filename}'")
         return data
     except (json.JSONDecodeError, EOFError, Exception) as e:
         _gp_log(f"[fatal error]: file corrupted or invalid: {e}")
         return []
+
 
 def build(script_path: str, icon=None, windowed=False, output_dir=None):
     import subprocess
@@ -267,3 +274,40 @@ def anchor(position=None, size=None, anchor="topleft", obj=None, reverse=False):
             return x + width, y + height // 2
         else:
             raise ValueError(f"Unknown anchor name: {anchor}")
+
+_colors = {
+"WHITE"  : (255, 255, 255),
+"BLACK"  : (0, 0, 0),
+"RED"  : (255, 0, 0),
+"GREEN"  : (0, 255, 0),
+"BLUE"  : (0, 0, 255),
+"YELLOW"  : (255, 255, 0),
+"CYAN"   : (0, 255, 255),
+"MAGENTA" : (255, 0, 255),
+"GRAY": (128, 128, 128),
+"GRAY1" : (30, 30, 30),
+"LIGHTGRAY"  : (200, 200, 200),
+"DARKGRAY": (50, 50, 50),
+"ORANGE" : (255, 165, 0),
+"PURPLE"  : (128, 0, 128),
+"PINK"   : (255, 192, 203),
+"BROWN"    : (139, 69, 19),
+"SKY"        : (0, 135, 215),
+}
+
+class Color:
+    def __init__(self, color):
+        if isinstance(color, str) and color.upper() in _colors:
+            self._color = _colors[color.upper()]
+        elif isinstance(color, tuple) and len(color) == 3:
+            self._color = color
+        else:
+            raise ValueError(f"undefined color '{color}'")
+
+    def __call__(self):
+        return self._color
+
+    def __repr__(self):
+        return f"Color({self._color})"
+    def __iter__(self):
+        return iter(self._color)

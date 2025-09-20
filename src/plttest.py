@@ -1,6 +1,6 @@
 import gamepie
 
-screen = gamepie.Window(title="Parkour master", flags=gamepie.utils.RESIZABLE,print_fps=True)
+screen = gamepie.Window(title="Parkour master", flags=gamepie.constants.RESIZABLE,print_fps=True,maximize=True)
 
 
 
@@ -10,45 +10,45 @@ count = gamepie.draw.gui.Label(screen,position=(0, 0), font=gamepie.load.Font(si
 gamecamera = gamepie.Camera(position=(0, 0), zoom=1, anchor="center")
 
 
-player_texture = gamepie.load.Texture("platformplug.jumper")
-spike_textures = gamepie.load.Texture("platformplug.spike")
+player_texture = gamepie.load.Texture("plugins:platformassets.textures.jumper")
+spike_textures = gamepie.load.Texture("plugins:platformassets.textures.spike")
 
-end_flag_textures = gamepie.load.Texture("platformplug.end_flag")
+end_flag_textures = gamepie.load.Texture("plugins:platformassets.textures.end_flag")
 
 
-player_run = gamepie.load.Frames(r"platformplug.jumper_go")
-player_jump = gamepie.load.Frames(r"platformplug.jumper_jump")
-player_stand = gamepie.load.Frames(r"platformplug.jumper_stand")
-death_sound = gamepie.mixer.Sound(gamepie.load.Audio("platformplug.jumper_death_sound",volume=10))
-jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.jump"))
+player_run = gamepie.load.Frames(r"plugins:platformassets.textures.jumper_go")
+player_jump = gamepie.load.Frames(r"plugins:platformassets.textures.jumper_jump")
+player_stand = gamepie.load.Frames(r"plugins:platformassets.textures.jumper_stand")
+death_sound = gamepie.mixer.Sound(gamepie.load.Audio("plugins:platformassets.textures.jumper_death_sound",volume=10))
+jump_sound = gamepie.mixer.Sound(gamepie.load.Audio("plugins:sound.effect.jump"))
 
-player = gamepie.draw.Animation(screen,position=(400 ,-480), frames=player_run,ms=300, size=(45 * 2, 30 * 3), camera=gamecamera,anchor=gamepie.utils.CENTER)
+player = gamepie.draw.Animation(screen,position=(400 ,-480), frames=player_run,ms=300, size=(45 * 2, 30 * 3), camera=gamecamera,anchor=gamepie.constants.CENTER)
 
-youwin_label = gamepie.draw.gui.Label(screen,position=(2480, -480), font=gamepie.load.Font("DejaVu Sans",50),text="Vyhrál jsi :)",background_color=None,anti_aliasing=True ,camera=gamecamera,anchor=gamepie.utils.TOPLEFT,visible=True).outline((0, 0, 0), 3)
+youwin_label = gamepie.draw.gui.Label(screen,position=(2480, -480), font=gamepie.load.Font("DejaVu Sans",50),text="Vyhrál jsi :)",background_color=None,anti_aliasing=True ,camera=gamecamera,anchor=gamepie.constants.TOPLEFT,visible=True).outline((0, 0, 0), 3)
 
 spikes = gamepie.utils.Objects(
-    gamepie.draw.Image(screen, texture=spike_textures, position=(380, -73), size=(64, 64), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Image(screen, texture=spike_textures, position=(1850, -380), size=(64, 64), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Image(screen, texture=spike_textures, position=(2250, -380), size=(64, 64), camera=gamecamera, anchor=gamepie.utils.CENTER),
+    gamepie.draw.Image(screen, texture=spike_textures, position=(380, -73), size=(64, 64), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Image(screen, texture=spike_textures, position=(1850, -380), size=(64, 64), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Image(screen, texture=spike_textures, position=(2250, -380), size=(64, 64), camera=gamecamera, anchor=gamepie.constants.CENTER),
 
 )
 
 map = gamepie.utils.Objects(
-    gamepie.draw.Rectangle(screen, position=(-380, 100), size=(200, 30), color=(200, 200, 200), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(-50, 80), size=(120, 25), color=(128,128,128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(130, 40), size=(120, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(380, -40), size=(250, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(650, -100), size=(120, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(880, -140), size=(140, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1100, -180), size=(120, 30), color=(116, 116, 116), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1290, -270), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(260, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(260, 30), color=(220, 180, 180), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(1680, -335), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.utils.CENTER),
-    gamepie.draw.Rectangle(screen, position=(2580, -335), size=(260, 30), color=(220, 180, 180), camera=gamecamera, anchor=gamepie.utils.CENTER),
+    gamepie.draw.Rectangle(screen, position=(-380, 100), size=(200, 30), color=(200, 200, 200), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(-50, 80), size=(120, 25), color=(128,128,128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(130, 40), size=(120, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(380, -40), size=(250, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(650, -100), size=(120, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(880, -140), size=(140, 25), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1100, -180), size=(120, 30), color=(116, 116, 116), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1290, -270), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(260, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1480, -335), size=(260, 30), color=(220, 180, 180), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(1680, -335), size=(120, 30), color=(128, 128, 128), camera=gamecamera, anchor=gamepie.constants.CENTER),
+    gamepie.draw.Rectangle(screen, position=(2580, -335), size=(260, 30), color=(220, 180, 180), camera=gamecamera, anchor=gamepie.constants.CENTER),
 )
-end_block = gamepie.draw.Image(screen,texture=end_flag_textures ,position=(2450, -335), size=(128, 256), camera=gamecamera, anchor=gamepie.utils.BOTTOMLEFT)
+end_block = gamepie.draw.Image(screen,texture=end_flag_textures ,position=(2450, -335), size=(128, 256), camera=gamecamera, anchor=gamepie.constants.BOTTOMLEFT)
 
 nmsp = gamepie.utils.Namespace({
     "platformBack": False,
@@ -63,10 +63,12 @@ tck = 0
 
 def update():
     global tck
+    
     dt = screen.fps.tick()
     tck += 1
     controller.update(dt)
     for spike in spikes.all():
+        
         if spike.collision.rect(player,offset=(32, 0,-48, 0)) or player.y >= 500:
             player.color = (255,0,0)
             player.pos =(-400, 100)

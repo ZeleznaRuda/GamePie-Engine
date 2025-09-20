@@ -1,18 +1,18 @@
 import gamepie
 #create window
-screen = gamepie.Window(title="Test",flags=gamepie.utils.RESIZABLE)
+screen = gamepie.Window(title="Test",flags=gamepie.constants.RESIZABLE)
 #fps
 fps = gamepie.Clock(60)
-gamepie.mixer.Music(gamepie.load.Audio("music"))
+gamepie.mixer.Music(gamepie.load.Audio("gp:gp.sound.music"))
 #loads
-font = gamepie.load.Font("arial",size=50)
+font = gamepie.load.Font("DejaVuSans",size=50)
 img = gamepie.load.Texture("pie")
 player_img = gamepie.load.Texture("brick")
 
-nom = gamepie.mixer.Sound(gamepie.load.Audio("effect.collect"))
+nom = gamepie.mixer.Sound(gamepie.load.Audio("sound.effect.collect"))
 #shape
-pie = gamepie.draw.Image(screen,texture=img,position=(50,50),anchor=gamepie.utils.CENTER,camera=gamepie.utils.uicamera).outline((0,0,0),3)
-player = gamepie.draw.Image(screen,texture=player_img,anchor=gamepie.utils.CENTER, position=(gamepie.utils.rnd.screen_pos(screen)), size=(70, 70), camera=gamepie.utils.uicamera).outline((0,0,0),2)
+pie = gamepie.draw.rect(screen,position=(50,50),anchor=gamepie.constants.CENTER,camera=gamepie.utils.uicamera).outline((0,0,0),3)
+player = gamepie.draw.Image(screen,texture=player_img,anchor=gamepie.constants.CENTER, position=(0,0), size=(70, 70), camera=gamepie.utils.uicamera).outline((0,0,0),2)
 
 #label
 text = gamepie.draw.gui. Label(screen,text=".",color=(0,255,0),font=font,anti_aliasing=True,background_color=None)
@@ -23,6 +23,8 @@ speed = 1
 def update():
     global speed, score
     dt = fps.tick()
+    pie = gamepie.draw.blur_rect(pie,50)
+    
     if gamepie.key.is_down("w"):
         player.y -= speed* dt
         player.angle = 90

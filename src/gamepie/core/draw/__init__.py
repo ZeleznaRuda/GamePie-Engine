@@ -1,4 +1,4 @@
-from .draw import rect,line,image,label,polygon
+from .draw import *
 
 from .rect import Rectangle
 from .ellipse import Ellipse

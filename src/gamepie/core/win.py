@@ -8,7 +8,7 @@ from pathlib import Path
 from ..pather import *
 from .event import mouse, key
 from ..utils.func import quit, screenshot
-from ..utils.dict import RESIZABLE
+from .constants import RESIZABLE
 from .surface import Surface
 from . import _gp_log
 from ..utils.gpbox import Messagebox as msgbox
@@ -33,7 +33,7 @@ class Window:
     _processes = []
     def __init__(self, icon=ICON16 if platform.system() == "Windows" else ICON70,
                  title="GamePie", size=(800, 500), fps_limit=60, flags=0,
-                 monitor=0, fullscreensize=False, vsync=False,print_fps=False, screenshot=True,maximize=False):
+                 monitor=0, vsync=False,print_fps=False, screenshot=True,maximize=False):
         self._w, self._h = size
         self.title = str(title)
         self.icon = str(icon)
@@ -47,6 +47,7 @@ class Window:
         self.fps = Clock(fps_limit)
         self.print_fps = bool(print_fps)
         self.maximize = bool(maximize)
+        self._tick = 0
         self.__create_window()
 
 
@@ -121,17 +122,20 @@ class Window:
                     _gp_log("[warning]: You cannot use fps display in the console (because your code uses the print function).")
                     __onetakeinrunfpswarning = True
             update_func = getattr(main, "update", None)
+            self._tick = self.fps.tick()
             if update_func:
                 update_func()
 
-            self.fps.tick()
+            
 
         pygame.quit()
 
     @property
     def center(self):
         return self._w // 2, self._h // 2
-
+    @property
+    def tick(self): 
+        return self._tick
     @property
     def w(self): 
         return self._w

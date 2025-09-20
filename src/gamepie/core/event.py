@@ -1,5 +1,5 @@
 import pygame
-from ..utils.dict import CURSOR_ARROW
+from .constants import CURSOR_ARROW
 pygame.init()
 
 class _Mouse:
@@ -12,12 +12,13 @@ class _Mouse:
         self._middle = False
         self._right = False
         self._cursor = CURSOR_ARROW
+        self._int_mousewheel = 0
         
     def update(self, events):
         self._mouse_x, self._mouse_y = pygame.mouse.get_pos()
         self._left, self._middle, self._right = pygame.mouse.get_pressed()
         pygame.mouse.set_cursor(self._cursor)      
-
+        self._int_mousewheel = self.getmouseweelint()
         for event in events:
             if event.type == pygame.MOUSEWHEEL:
                 self._mousewheel = event.y
@@ -25,7 +26,16 @@ class _Mouse:
  
     def get(self):
         return [(self._mouse_x, self._mouse_y),self._left, self._middle, self._right, self._mousewheel] 
-
+    def getmouseweelint(self):
+        if self.mousewheel == 1:
+            self._int_mousewheel += 1
+            self.mousewheel = 0 
+        elif self.mousewheel == -1:
+            self._int_mousewheel -= 1
+            self.mousewheel = 0 
+        return self._int_mousewheel
+    @property
+    def int_mousewheel(self): return self._int_mousewheel
     @property
     def x(self): return self._mouse_x
 
@@ -46,7 +56,9 @@ class _Mouse:
 
     @property
     def mousewheel(self): return self._mousewheel
-
+    @mousewheel.setter
+    def mousewheel(self, value): 
+        self._mousewheel = value
     @property
     def cursor(self): return self._cursor
     @cursor.setter
