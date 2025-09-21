@@ -1,6 +1,6 @@
 from .collision import _Collision
 from .cam import Camera
-from ..utils import  uicamera
+from ..core.constants import  uicamera
 class Point:
     def __init__(self,surface, x, y,width=5,camera:Camera=uicamera):
         self.surface = surface

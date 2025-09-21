@@ -2,7 +2,8 @@ from .draw import ellipse
 from ..rect import Rect
 from ..collision import _Collision
 from ..cam import Camera
-from ...utils import camera
+from ..constants import camera
+from ..color import _Color
 class Ellipse:
     def __init__(self, surface, position=(0, 0), size=(60, 50), color=(255, 255, 255),
                  anchor="topleft", alpha=255, angle=0,camera:Camera=camera, visible=True, enable=True):
@@ -19,6 +20,8 @@ class Ellipse:
         self.__outline=False
         self.__outline_color=(0,0,0)
         self.__outline_size=3
+
+        self.color = color
         
         self.__update_rect()
 
@@ -36,7 +39,7 @@ class Ellipse:
     
     def outline(self, color, size):
         self.__outline = True
-        self.__outline_color=color
+        self.__outline_color=_Color(color)()
         self.__outline_size =size
         return self
     
@@ -143,7 +146,7 @@ class Ellipse:
 
     @color.setter
     def color(self, value): 
-        self._color = value
+        self._color = _Color(value)()
         self.__update_rect()
 
     @property

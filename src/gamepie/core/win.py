@@ -12,7 +12,7 @@ from .constants import RESIZABLE
 from .surface import Surface
 from . import _gp_log
 from ..utils.gpbox import Messagebox as msgbox
-
+from ..core.color import _Color
 pygame.init()
 
 
@@ -82,15 +82,17 @@ class Window:
         target_surface.blit(self.surface, pos)
 
     def fill(self, color):
-        self.surface.fill(color)
+        self.surface.fill(_Color(color)())
     
     def flip(self):
         pygame.display.flip()
 
     def _get_screenshot_folder(self):
-        folder = Path(__file__).parent.parent.parent / "screenshots"
-        folder.mkdir(exist_ok=True)  
+        base = Path(sys.argv[0]).resolve().parent
+        folder = base / "myscreenshots"
+        folder.mkdir(parents=True, exist_ok=True)
         return folder
+
    
     def run(self):
         __onetakeinrunfpswarning = False
@@ -180,6 +182,7 @@ def _window_process(args, kwargs):
     win.run()
     pygame.quit()
 def _main_uses_print(main) -> bool:
+    #ai
     import ast
     import inspect
     if not main:

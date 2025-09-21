@@ -5,7 +5,7 @@ class PlatformController:
     def __init__(self, player, camera, objects,camera_offset=(0,0), gravity=2, speed=1, jump_power=24, c_key_enabled=True, movement_3_key=("a","d","space")):
         self.player = player
         self.camera = camera
-        self.objects = objects
+        self._objects = objects
         self._speed = speed
         self._status = None
         self._c_key_enabled = c_key_enabled 
@@ -32,6 +32,14 @@ class PlatformController:
     @property
     def speed(self):
         return self._speed
+
+
+    @property
+    def objects(self):
+        return self._objects
+    @objects.setter
+    def objects(self, value):
+        self._objects = value
 
     @speed.setter
     def speed(self, value: float):
@@ -72,7 +80,7 @@ class PlatformController:
         self._falling = self._vel_y > 0
 
         if collision:
-            for obj in self.objects:
+            for obj in self._objects:
                 if self.player.collision.rect(obj):
                     if self._vel_y > 0:
                         self.player.y = obj.y - obj.height/2 - self.player.height/2
@@ -85,7 +93,7 @@ class PlatformController:
 
         self.player.x += move_x
         if collision:
-            for obj in self.objects:
+            for obj in self._objects:
                 if self.player.collision.rect(obj):
                     if move_x > 0: 
                         self.player.x = obj.x - obj.width/2 - self.player.width/2

@@ -2,14 +2,16 @@ from .draw import rect
 from ..rect import Rect
 from ..collision import _Collision
 from ..cam import Camera
-from ...utils import camera
+from ..color import _Color
+from ..constants import camera
 class Rectangle:
     def __init__(self, surface, position=(0, 0), size=(60, 50), color=(255, 255, 255),
                  anchor="topleft", alpha=255, angle=0,camera:Camera=camera, visible=True, enable=True):
         self.surface = surface
         self._x, self._y = position
         self._w, self._h = size
-        self._color = color
+        self._color = None
+        
         self._anchor = anchor
         self._alpha = alpha
         self._angle = angle
@@ -24,6 +26,9 @@ class Rectangle:
         self.__outline=False
         self.__outline_color=(0,0,0)
         self.__outline_size=3
+
+        self.color = color
+        
         
         self.__update_rect()
     def border_radius(self, 
@@ -64,7 +69,7 @@ class Rectangle:
     
     def outline(self, color, size):
         self.__outline = True
-        self.__outline_color=color
+        self.__outline_color=_Color(color)()
         self.__outline_size =size
         return self
     
@@ -179,7 +184,7 @@ class Rectangle:
 
     @color.setter
     def color(self, value): 
-        self._color = value
+        self._color = _Color(value)()
         self.__update_rect()
 
     @property

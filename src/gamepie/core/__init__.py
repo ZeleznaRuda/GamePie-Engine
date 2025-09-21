@@ -24,6 +24,7 @@ from .event import *
 from . import mixer
 from . import draw
 from . import constants
+from . import color
 from .time import wait, _wait_cache_, asyncWait
 from .point import Point
 from .cam import Camera

@@ -2,7 +2,7 @@ from gamepie.core.draw.rect import Rectangle
 from gamepie.core.draw.gui.lable import Label
 from gamepie.core.load.font import Font
 from gamepie.core.event import key, mouse
-from gamepie.utils import uicamera
+from gamepie.core.constants import uicamera
 from gamepie.core.time import wait
 
 
@@ -42,7 +42,6 @@ class InputBox:
                                      anchor=self._anchor,
                                      camera=self._camera).border_radius(5, 5, 5, 5)
 
-    # --- Propertyy ---
     @property
     def x(self):
         return self._x
@@ -165,7 +164,6 @@ class InputBox:
         self._font = value
         self._label.font = self._font
 
-    # --- Interní metody ---
     def _update_rect(self):
         self._background.pos = (self._x, self._y)
         self._background.size = (self._w, self._h)

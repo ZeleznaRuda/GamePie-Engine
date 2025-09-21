@@ -43,8 +43,13 @@ class Vector2:
             return self / mag
         return Vector2(0, 0)
 
+def recto(a:int,b:int) -> int:
+    return 2*(a+b)
 
-class Random:
+def rects(a:int,b:int) -> int:
+    return a*b
+
+class _Random:
     def __init__(self):
         pass
 
@@ -90,4 +95,4 @@ class Random:
 
     def angle(self, deg=False):
         return random.uniform(0, 360) if deg else random.uniform(0, 2 * 3.14159)
-rnd = Random()
+rnd = _Random()

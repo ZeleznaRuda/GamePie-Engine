@@ -1,5 +1,4 @@
 import pygame
-import pygame
 
 RESIZABLE: int = pygame.RESIZABLE
 NOFRAME: int = pygame.NOFRAME
@@ -44,39 +43,6 @@ MSGBOX_INFO = 40
 MSGBOX_QUESTION = 30
 MSGBOX_SCREENSHOT = 50
 
-_colors = {
-"WHITE"  : (255, 255, 255),
-"BLACK"  : (0, 0, 0),
-"RED"  : (255, 0, 0),
-"GREEN"  : (0, 255, 0),
-"BLUE"  : (0, 0, 255),
-"YELLOW"  : (255, 255, 0),
-"CYAN"   : (0, 255, 255),
-"MAGENTA" : (255, 0, 255),
-"GRAY": (128, 128, 128),
-"GRAY1" : (30, 30, 30),
-"LIGHTGRAY"  : (200, 200, 200),
-"DARKGRAY": (50, 50, 50),
-"ORANGE" : (255, 165, 0),
-"PURPLE"  : (128, 0, 128),
-"PINK"   : (255, 192, 203),
-"BROWN"    : (139, 69, 19),
-"SKY"        : (0, 135, 215),
-}
-
-class Color:
-    def __init__(self, color):
-        if isinstance(color, str) and color.upper() in _colors:
-            self._color = _colors[color.upper()]
-        elif isinstance(color, tuple) and len(color) == 3:
-            self._color = color
-        else:
-            raise ValueError(f"undefined color '{color}'")
-
-    def __call__(self):
-        return self._color
-
-    def __repr__(self):
-        return f"Color({self._color})"
-    def __iter__(self):
-        return iter(self._color)
+from .cam import Camera
+camera = Camera(anchor="center")
+uicamera = Camera(anchor="topleft")

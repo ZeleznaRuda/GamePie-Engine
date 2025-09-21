@@ -27,11 +27,11 @@ class Surface:
         return self.surface.get_size()
 
     @property
-    def width(self):
+    def w(self):
         return self.surface.get_width()
 
     @property
-    def height(self):
+    def h(self):
         return self.surface.get_height()
 
     @property

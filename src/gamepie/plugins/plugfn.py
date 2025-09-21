@@ -6,7 +6,7 @@ import subprocess
 from gamepie.core import _gp_log
 from urllib.parse import urlparse
 import platform
-protected_plugins = ["GUIassets","Controllers"]
+protected_plugins = ["GUIassets","SoundsAssets"]
 
 # ai//t:my
 def install(input_path):

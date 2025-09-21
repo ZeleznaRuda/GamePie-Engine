@@ -2,8 +2,9 @@
 from ..rect import Rect
 from ..draw import label
 from ...cam import Camera
-from ....utils import uicamera
+from ...constants import uicamera
 from ...load import Font
+from ...color import _Color
 import re
 class Label:
     def __init__(self, surface, position=(0, 0), size=(60, 50), color=(0, 0, 0), background_color=(255, 255, 255),
@@ -29,6 +30,8 @@ class Label:
         self._x, self._y = position
 
         self.rect = Rect(self._x, self._y, self._w, self._h)
+        self.color = color
+        
         self.__update_rect()
 
     def _anchor_offset(self, w, h):
@@ -154,7 +157,7 @@ class Label:
 
     def outline(self, color, size):
         self.__outline = True
-        self.__outline_color=color
+        self.__outline_color=_Color(color)()
         self.__outline_size =size
         return self
     
@@ -180,7 +183,7 @@ class Label:
     def __draw_label(self):
         lines = self._split_by()
         line_height = self.height
-
+        #ai
         for i, l in enumerate(lines):
             y_offset = self.rect.y + i * line_height // 2
 

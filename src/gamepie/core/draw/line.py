@@ -1,6 +1,7 @@
 from ..rect import Rect
 from .draw import line
-from ...utils import camera
+from ..constants import camera
+from ..color import _Color
 class Line:
     def __init__(self, surface, positions=((100, 100), (200, 200)), width=3, color=(255,255,255),anti_aliasing=False,blend=False, enable=True, visible=True):
             self.surface = surface
@@ -12,6 +13,7 @@ class Line:
             self._anti_aliasing = anti_aliasing
             self._blend = blend
             self._enable = enable
+            self.color = color
     def _set_poss(self, poss):
         self._spos, self._epos = poss
     
@@ -72,6 +74,8 @@ class Line:
     def color(self): return self._color
 
     @color.setter
-    def color(self, value): self._color = value
+    def color(self, value): 
+        self._color = _Color(value)()
+
     def copy(self):
         return self

@@ -6,7 +6,7 @@ from gamepie.core.load.font import Font
 from gamepie.core.draw.gui.lable import Label
 from gamepie.core.event import mouse
 from gamepie.core.time import wait
-from gamepie.utils import uicamera
+from gamepie.core.constants import uicamera
 from gamepie.utils.func import anchor as ar
 
 
@@ -48,7 +48,6 @@ class Button:
                                          size=(self._w, self._h), color=self._color,
                                          anchor=self._anchor, camera=self._camera).border_radius(5, 5, 5, 5)
 
-    # --- Interní metody ---
     def __get_text_pos(self):
         if self._font:
             font_obj = self._font()
@@ -176,7 +175,6 @@ class Button:
     def label(self):
         return self._label
 
-    # --- Interakce ---
     def is_press(self):
         if wait(self._deley, f"__Lib.Button.{id(self)}:Deley -> {self._deley}"):
             if self._background.collision.point(mouse.pos) and mouse.left:

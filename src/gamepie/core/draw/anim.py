@@ -4,9 +4,9 @@ from ..collision import _Collision
 from ..rect import Rect
 from ..load.frames import Frames
 from ..cam import Camera
-from ...utils import camera
+from ..constants import camera
 from ..time import wait
-
+from ..color import _Color
 class Animation:
     def __init__(self, surface, frames: Frames,auto_play=False,ms=60, position=(0, 0), size=(50, 50), color=(255, 255, 255),
                  anchor="topleft", alpha=255, angle=0,flip=(False,False),camera:Camera=camera,enable=True, visible=True):
@@ -33,6 +33,9 @@ class Animation:
         self.__final_image = None
         self._enable = enable
         self.__final_pos = (self._x, self._y)
+
+        self.color = color
+
         self.__update_rect()
     def _anchor_offset(self, w, h):
         # --for lib
@@ -53,7 +56,7 @@ class Animation:
             self.rect = self._camera.apply(self.rect,screen_size=(self.surface.w,self.surface.h))
     def outline(self, color, size):
         self.__outline = True
-        self.__outline_color = color
+        self.__outline_color =_Color(color)()
         self.__outline_size = size
         return self
     def play(self):
@@ -136,8 +139,9 @@ class Animation:
     @property
     def color(self): return self._color
     @color.setter
-    def color(self, value):
-        self._color = value
+    def color(self, value): 
+        self._color = _Color(value)()
+        self.__update_rect()
 
     @property
     def alpha(self): return self._alpha
